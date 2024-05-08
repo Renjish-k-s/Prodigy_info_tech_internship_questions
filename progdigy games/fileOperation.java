@@ -47,15 +47,17 @@ public class fileOperation {
         while (count==0) {
 
 
-        System.out.println("Menu \n 1.Insert new contact \n 2.Edit new contact\n 3.Delete contact \n 4.Display my contacts \n 5.Exit");
+        System.out.println("\nMenu \n 1.Insert new contact \n 2.Edit new contact\n 3.Delete contact \n 4.Display my contacts \n 5.Exit");
         int ch = s.nextInt();
-
+        int c=gettable(filename).size();
         switch (ch) {
             case 1:
                         System.out.println("Enter the no. of contacts  added");
                         int limit = s.nextInt();
                         s.nextLine();
-                        int i=gettable(filename).size();
+                        int i;
+                        
+                      
                 
                                 try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true)))
                                 {
@@ -63,7 +65,8 @@ public class fileOperation {
                         
                                     for(i=0;i<limit;i++)
                                     {
-                                        writer.write((i+1)+",");
+                                    
+                                        writer.write((c+=1)+",");
                                         System.out.println("Enter the name");
                                         writer.write(s.nextLine()+",");
                                         System.out.println("Enter the Phone number");
@@ -72,6 +75,7 @@ public class fileOperation {
                                         writer.write(s.nextLine()+",");
                                         writer.write("\n");
                                     }
+                                    writer.close();
                                 }
                                 catch(IOException ex)
                                 {
@@ -81,6 +85,63 @@ public class fileOperation {
             case 2:
                             s.nextLine();
                             List<String[]> realtobedit=gettable(filename);
+                            
+                            System.out.println("Enter the slno of person to be edited");
+                            int editno=s.nextInt();
+                            String ed[][] = new String[c][4];
+                            int m=-1;
+                            int r=0;
+                            // System.out.println(c);
+                            for(String[] row: realtobedit)
+                            {
+                                m+=1;
+                                    for(String field : row)
+                                    {
+                                        ed[m][r]=field;
+                                        
+                                        // System.out.println(m +" "+ r);
+
+                                        r+=1;
+                                    }    
+                                    r=0;
+                                    
+                            }
+                            s.nextLine();
+                            for(i=0;i<c;i++)
+                            {
+                                if(i+1 == editno)
+                                {
+                                    System.out.println("Enter the name");
+                                    ed[i][1]=s.nextLine();
+                                    System.out.println("Enter the phone number");
+                                    ed[i][2]=s.nextLine();
+                                    System.out.println("Enter the email address");
+                                    ed[i][3]=s.nextLine();
+                                    break;
+                                }
+                            }
+                            try {
+                               
+                               
+                                
+                            FileWriter realedit = new FileWriter(filename);
+                                
+                               
+                                for (i = 0; i < c; i++) {
+                                    for (int j = 0; j < 4; j++) {
+                                        realedit.write(ed[i][j] + ",");
+                                    }
+                                    realedit.write("\n");
+                                }
+                                
+                                // Close the FileWriter after writing
+                                realedit.close(); 
+                                
+                            } catch (IOException ex) {
+                                System.out.println(ex);
+                            }
+                            
+
                             
 
             break;

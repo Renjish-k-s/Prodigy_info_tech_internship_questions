@@ -17,7 +17,7 @@ class contact {
             int slno,j,i;
             
 
-            for(i=0;i<limit;i++)
+            for(i=0;i<limit;i++)gi 
             {
                 j=0;
                 contact[i][j]=String.valueOf(i+1);
