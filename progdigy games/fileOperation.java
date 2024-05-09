@@ -41,7 +41,7 @@ public class fileOperation {
         String filename ="contact.csv";
 
         int count=0;
-
+        
        
 
         while (count==0) {
@@ -65,15 +65,16 @@ public class fileOperation {
                         
                                     for(i=0;i<limit;i++)
                                     {
-                                    
-                                        writer.write((c+=1)+",");
-                                        System.out.println("Enter the name");
-                                        writer.write(s.nextLine()+",");
-                                        System.out.println("Enter the Phone number");
+                                        System.out.println("--------------"+(i+1)+"request-------------");
+                                            writer.write((c+=1)+",");
+                                            System.out.println("Enter the name");
+                                            writer.write(s.nextLine().toUpperCase()+",");
+                                            System.out.println("Enter the Phone number");
                                         writer.write(s.nextLine()+",");
                                         System.out.println("Enter the Email address");
                                         writer.write(s.nextLine()+",");
                                         writer.write("\n");
+                                        System.out.println("--------------data inserted sucessfully-------------");
                                     }
                                     writer.close();
                                 }
@@ -81,11 +82,13 @@ public class fileOperation {
                                 {
                                     System.out.println(ex);
                                 }
+
+                                System.out.println(limit+" data inserted sucessfully");
             break;
             case 2:
                             s.nextLine();
                             List<String[]> realtobedit=gettable(filename);
-                            
+                            int opt=0;  
                             System.out.println("Enter the slno of person to be edited");
                             int editno=s.nextInt();
                             String ed[][] = new String[c][4];
@@ -112,12 +115,14 @@ public class fileOperation {
                                 if(i+1 == editno)
                                 {
                                     System.out.println("Enter the name");
-                                    ed[i][1]=s.nextLine();
+                                    ed[i][1]=s.nextLine().toUpperCase();
                                     System.out.println("Enter the phone number");
                                     ed[i][2]=s.nextLine();
                                     System.out.println("Enter the email address");
                                     ed[i][3]=s.nextLine();
+                                    opt=1;
                                     break;
+                                  
                                 }
                             }
                             try {
@@ -141,7 +146,13 @@ public class fileOperation {
                                 System.out.println(ex);
                             }
                             
-
+                            if (opt==0) {
+                                System.out.println("such a entry don't exist!!");
+                            }
+                            else
+                            {
+                                System.out.println("Data has been edited permenantly");
+                            }
                             
 
             break;
@@ -149,7 +160,7 @@ public class fileOperation {
                              s.nextLine();
                              List<String[]> edittable=gettable(filename);
                              System.out.println("Enter the Sl no of person to be deleted");
-
+                             int ropt=0;
                              String delno = s.nextLine();
                              i=0;
                              try
@@ -159,7 +170,8 @@ public class fileOperation {
                              for(String[] row : edittable)
                                     {
                                         if (!row[0].strip().equals(delno.strip())) {
-                                            editor.write((i+1)+",");
+                                            i=i+1;
+                                            editor.write((i)+",");
                                           
                                             editor.write(row[1]+",");
                                             
@@ -167,6 +179,8 @@ public class fileOperation {
                                           
                                             editor.write(row[3]+",");
                                             editor.write("\n");
+                                           
+                                            ropt=1;
                                         }
                                     }
 
@@ -178,20 +192,39 @@ public class fileOperation {
                                     System.out.println(ex);
                                 }
 
+                                if (ropt==0) {
+                                    System.out.println("such a entry don't exist!!");
+                                }
+                                else
+                                {
+                                    System.out.println("Data has been deleted permenantly");
+                                }
+                               
+
 
             break;
             case 4:
+                                System.out.println("----------------------------------------------");
+                                System.out.println("------------Available contact list------------");
+                                System.out.println("----------------------------------------------");
+
 
                                 List<String[]> table=gettable(filename);
 
                                     for(String[] row : table)
                                     {
+                System.out.println("----------------------------------------------");          
                                         for(String field : row)
                                         {
-                                            System.out.print(field+"\t");
+                                            System.out.print("|  "+field+" |\t");
                                         }
                                         System.out.println("\n");
+
+                System.out.println("----------------------------------------------");
+
                                     }
+                System.out.println("-------------------"+table.size()+" Contacts found-----------------");
+
             break;
             case 5:
                                 count=1;
